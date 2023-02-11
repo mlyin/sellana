@@ -18,9 +18,10 @@ const NewTransactionModal = ({ modalOpen, setModalOpen }) => {
     }
 
     const onPay = async () => {
-        // Pay and add transaction funcationallity goes here!
-        doTransaction({amount, receiver, transactionPurpose })
+        // Pay and add transaction funcationallity goes here
+        await doTransaction({amount, receiver, transactionPurpose })
         // Clear states
+        setModalOpen(false);
         setAmount(0)
         setReceiver("")
         setTransactionPurpose("")

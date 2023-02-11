@@ -7,15 +7,15 @@ import NewTransactionModal from '../components/transaction/NewTransactionModal'
 import TransactionsList from '../components/transaction/TransactionsList'
 import { useWallet } from '@solana/wallet-adapter-react'
 import TransactionQRModal from '../components/transaction/TransactionQRModal'
-import { transactions } from '../data/transactions'
+// import { transactions } from '../data/transactions'
 import { getAvatarUrl } from "../functions/getAvatarUrl"
 import { useCashApp } from '../hooks/cashapp'
 
 const Home = () => {
     const [transactionQRModalOpen, setTransactionQRModalOpen] = useState(false)
-    const [newTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
+    // const [newTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
 
-    const { connected, publicKey, avatar, userAddress } = useCashApp()
+    const { connected, publicKey, avatar, userAddress, transactions,  newTransactionModalOpen, setNewTransactionModalOpen } = useCashApp()
 
     return (
         <div className="flex min-h-screen ">

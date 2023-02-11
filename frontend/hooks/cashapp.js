@@ -15,6 +15,19 @@ export const useCashApp = () => { //Use hook for wallet state and avatar
     const [transactionPurpose, setTransactionPurpose] = useState('')
 	const [amount, setAmount] = useState(0)
 	const { connection } = useConnection()
+	const [newTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
+
+	const useLocalStorage = (storageKey, fallbackState) => { //store all previous transactions
+		const [value, setValue] = useState(
+			JSON.parse(localStorage.getItem(storageKey)) ?? fallbackState //if nothing use fallback
+		)
+		useEffect(() => {
+			localStorage.setItem(storageKey, JSON.stringify(value));
+		}, [value, setValue])
+		return [value, setValue]
+	}
+
+	const [transactions, setTransactions] = useLocalStorage("transactions", [])
 
 	// Get Avatar based on the userAddress
 	useEffect(() => {
@@ -69,8 +82,47 @@ export const useCashApp = () => { //Use hook for wallet state and avatar
 		console.log("txn hash: " + txnHash)
 
 		//Create transaction history objects
+		const newID = (transactions.length + 1).toString()
+		const newTransaction = {
+			id: newID,
+			from: { 
+				name: publicKey,
+				handle: publicKey,
+				avatar: avatar,
+				verified: true
+			},
+			to: {
+				name: receiver,
+				handle: '-',
+				avatar: getAvatarUrl(receiver.toString()),
+				verified: false,
+			},
+			description: transactionPurpose,
+			transactionDate: new Date(),
+			status: 'Completed',
+			amount: amount,
+			source: '-',
+			identified: '-',
+		}
+		setNewTransactionModalOpen(false)
+		setTransactions([newTransaction,...transactions])
 	}
 
 
-	return { connected, publicKey, avatar, userAddress, doTransaction, amount, setAmount, receiver, setReceiver, transactionPurpose, setTransactionPurpose }
+	return { connected, 
+		publicKey, 
+		avatar,
+		userAddress, 
+		doTransaction, 
+		amount, 
+		setAmount, 
+		receiver, 
+		setReceiver,
+		transactionPurpose, 
+		setTransactionPurpose,
+		transactions,
+		setTransactions,
+		newTransactionModalOpen,
+		setNewTransactionModalOpen,
+	}
 }
