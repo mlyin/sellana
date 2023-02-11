@@ -8,12 +8,12 @@ const NavMenu = ({ connected, publicKey }) => {
     const menus = [
         {
             icon: ClockIcon,
-            item: 'Activity',
+            item: 'Recent Activity',
             current: true,
         },
         {
             icon: CurrencyDollarIcon,
-            item: 'Cash Card',
+            item: 'Store',
             current: false,
         },
         {
