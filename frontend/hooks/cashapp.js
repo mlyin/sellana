@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js';
 
 export const useCashApp = () => { //Use hook for wallet state and avatar
 	const [avatar, setAvatar] = useState("")
-    const [userAddress, setUserAddress] = useState("11111111111111")
+    const [userAddress, setUserAddress] = useState("11111111111111111111111111111111")
 	const {connected, publicKey, sendTransaction } = useWallet()
     const [receiver, setReceiver] = useState('')
     const [transactionPurpose, setTransactionPurpose] = useState('')

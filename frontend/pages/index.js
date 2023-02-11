@@ -21,7 +21,7 @@ const Home = () => {
         <div className="flex min-h-screen ">
             <header className="flex w-[250px] flex-col bg-[#0bb534] p-12">
                 <Profile setModalOpen={setTransactionQRModalOpen} avatar={avatar} userAddress={userAddress} />
-                <TransactionQRModal modalOpen={transactionQRModalOpen} setModalOpen={setTransactionQRModalOpen} userAddress={userAddress} myKey={publicKey} setQrCode = {setQrCode} />
+                <TransactionQRModal modalOpen={transactionQRModalOpen} setModalOpen={setTransactionQRModalOpen} userAddress={userAddress} myKey={publicKey} setQrCode={setQrCode} />
 
                 <NavMenu connected={connected} myKey={publicKey} publicKey={publicKey} />
 

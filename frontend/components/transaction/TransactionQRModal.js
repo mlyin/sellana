@@ -5,11 +5,13 @@ import BigNumber from 'bignumber.js';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { useEffect, useRef, useState } from 'react';
 import { truncate } from "../../utils/string"
-
+import { useCashApp } from '../../hooks/cashapp'
+import { getAvatarUrl } from '../../functions/getAvatarUrl';
 
 
 
 const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode }) => {
+    const {transactions, setTransactions, avatar} = useCashApp()
     const qrRef = useRef() //gives back an object
     const { connection } = useConnection()
     // Need to generate QR code based on public key
@@ -20,8 +22,8 @@ const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode })
 
     useEffect(() => {
         //Do something when the component first renders (generate QR)
-        console.log("LOGGING USER ADDRESS" + userAddress + typeof(userAddress));
-        const recipient = new PublicKey(userAddress.toString())
+        // console.log("LOGGING USER ADDRESS" + userAddress + typeof(userAddress));
+        const recipient = new PublicKey(userAddress)
         const amount = new BigNumber("1")
         const reference = Keypair.generate().publicKey
         const label = "Evil cookies inc"
@@ -41,6 +43,67 @@ const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode })
             qrRef.current.innerHTML = ''
             qr.append(qrRef.current)
         }
+
+        //Wait for user to send transaction
+
+        const interval = setInterval(async() => {
+            console.log("waiting for transaction confirmation")
+            try {
+                //check if there's any transactions for the reference
+                const signatureInfo = await findReference(connection, reference, {finality: 'confirmed'})
+                console.log("validating")
+                await validateTransfer(
+                    connection,
+                    signatureInfo.signature,
+                    {
+                        recipient,
+                        amount,
+                        reference,
+                    },
+                    {commitment: 'confirmed'}
+                )
+                //Add transaction to local storage
+                const newID = (transactions.length + 1).toString()
+                const newTransaction = {
+                    id: newID,
+                    from: { 
+                        name: recipient,
+                        handle: recipient,
+                        avatar: getAvatarUrl(recipient.toString()),
+                        verified: true
+                    },
+                    to: {
+                        name: reference,
+                        handle: '-',
+                        avatar: getAvatarUrl(reference.toString()),
+                        verified: false,
+                    },
+                    description: 'User sent you SOL through Phantom',
+                    transactionDate: new Date(),
+                    status: 'Completed',
+                    amount: amount,
+                    source: '-',
+                    identified: '-',
+                }
+                setModalOpen(false)
+                setTransactions([newTransaction,...transactions])
+
+                clearInterval(interval)
+            } catch (e) {
+                if (e instanceof FindReferenceError) {
+                    //no transaction found
+                    return
+                }
+                if (e instanceof ValidateTransferError) {
+                    //tx invalid
+                    console.error("Transaction invalid", e)
+                }
+                console.error("unknown error")
+                console.log(e.message)
+            }
+        })
+
+        return () => clearInterval(interval)
     })
 
     return (
