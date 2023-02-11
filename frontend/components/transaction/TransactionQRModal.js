@@ -9,18 +9,45 @@ import { truncate } from "../../utils/string"
 
 
 
-const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress }) => {
-
+const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode }) => {
+    const qrRef = useRef() //gives back an object
+    const { connection } = useConnection()
+    // Need to generate QR code based on public key
     // Set the state to true to rerender the component with generated QR
     const loadQr = () => {
-
+        setQrCode(true)
     }
+
+    useEffect(() => {
+        //Do something when the component first renders (generate QR)
+        console.log("LOGGING USER ADDRESS" + userAddress + typeof(userAddress));
+        const recipient = new PublicKey(userAddress.toString())
+        const amount = new BigNumber("1")
+        const reference = Keypair.generate().publicKey
+        const label = "Evil cookies inc"
+        const message = "Thanks for the sol"
+
+        const urlParams = { //need to adjust to take other currencies
+            recipient,
+            amount,
+            reference,
+            label,
+            message,
+        }
+
+        const url = encodeURL(urlParams)
+        const qr = createQR(url, 488, 'transparent')
+        if (qrRef.current) {
+            qrRef.current.innerHTML = ''
+            qr.append(qrRef.current)
+        }
+    })
 
     return (
         <Modal modalOpen={modalOpen} setModalOpen={setModalOpen}>
             <div >
                 <div className="flex flex-col items-center justify-center space-y-1">
-                    <div />
+                    <div ref={qrRef}/>
                 </div>
 
                 <div className="flex flex-col items-center justify-center space-y-1">
