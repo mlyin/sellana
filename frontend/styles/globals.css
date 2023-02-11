@@ -21,3 +21,12 @@ input::-webkit-inner-spin-button {
 .phantom-button:hover > span {
     color: rgb(243 244 246) !important;
 }
+
+.header {
+  background-color: #0bb534;
+  mix-blend-mode: multiply;
+  padding: 12px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+}

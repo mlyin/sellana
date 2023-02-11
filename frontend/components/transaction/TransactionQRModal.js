@@ -101,7 +101,7 @@ const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode })
                 console.error("unknown error")
                 console.log(e.message)
             }
-        })
+        }, 2000)
 
         return () => clearInterval(interval)
     })
