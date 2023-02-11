@@ -8,7 +8,7 @@ import { clusterApiUrl, Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, System
 import BigNumber from 'bignumber.js';
 
 export const useCashApp = () => { //Use hook for wallet state and avatar
-	const [avatar, setAvatar] = useState("")
+	const [avatar, setAvatar] = useState("https://www.pngfind.com/pngs/m/676-6764065_default-profile-picture-transparent-hd-png-download.png")
     const [userAddress, setUserAddress] = useState("11111111111111111111111111111111")
 	const {connected, publicKey, sendTransaction } = useWallet()
     const [receiver, setReceiver] = useState('')
