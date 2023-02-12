@@ -2,28 +2,26 @@
 import { PublicKey, Keypair, Transaction, Connection } from '@solana/web3.js';
 import BigNumber from 'bignumber.js';
 import { createTransfer } from '@solana/pay';
+import { getAvatarUrl } from '../../../../functions/getAvatarUrl';
 
 export default async function handler(req, res) {
-	// res.status(200).json({ name: 'John Doe' })
-
-    
 	const connection = new Connection("https://api.devnet.solana.com")
+    const {pid, ref} = req.query;
+
 	if (req.method === "GET") {
 		res.status(200).send({
-			label: "123",
-			icon: "https://toppng.com/uploads/preview/duck-115244013619fahj8jcpu.png",
+			label: pid.toString(),
+			icon: getAvatarUrl((pid.toString()) + ".png"),
 		});
 		return
 	}
-    const {pid, ref} = req.query;
 	const accountField = req.body.account;
 	// Compose a simple transfer transaction to return. In practice, this can be any transaction, and may be signed.
 	const recipient = new PublicKey(pid)
 	const amount = new BigNumber("0.1")
     const reference = new PublicKey(ref);
-	// const reference = Keypair.generate().publicKey
 	const label = "ok"
-	const message = "Thanks for the sol"
+	const message = "Thanks for the SOL!"
 	const splToken = new PublicKey("4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU")
     
     let transaction = await createTransfer(connection, new PublicKey(accountField), {
