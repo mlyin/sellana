@@ -30,3 +30,24 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
 }
+
+.coffee-shop {
+    padding: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+  }
+  
+  .menu-title,
+  .cart-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .menu-table,
+  .cart-table {
+    width: 100%;
+  }  

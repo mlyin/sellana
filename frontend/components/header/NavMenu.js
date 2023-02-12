@@ -45,9 +45,9 @@ const NavMenu = ({ connected, publicKey }) => {
     )
 }
 
-const NavMenuItem = ({ Icon, item, current, action }) => {
+const NavMenuItem = ({ Icon, item, current }) => {
     return (
-        <li onClick={action} className={classNames('flex cursor-pointer space-x-3 transition-all hover:text-gray-100', current ? 'text-white' : 'text-[#5A5A5A]', 'font-semibold')}>
+        <li onClick={() => window.location.href = {item}} className={classNames('flex cursor-pointer space-x-3 transition-all hover:text-gray-100', current ? 'text-white' : 'text-[#5A5A5A]', 'font-semibold')}>
             <Icon className="h-6 w-6 " />
             <span>{item}</span>
         </li>

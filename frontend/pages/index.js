@@ -7,10 +7,13 @@ import NewTransactionModal from '../components/transaction/NewTransactionModal'
 import TransactionsList from '../components/transaction/TransactionsList'
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import TransactionQRModal from '../components/transaction/TransactionQRModal'
-// import { transactions } from '../data/transactions'
 import { getAvatarUrl } from "../functions/getAvatarUrl"
 import { useCashApp } from '../hooks/cashapp'
 import { Connection, clusterApiUrl, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from "@solana/web3.js"
+
+import { coffeeShopItems } from '../data/coffeeShopData'
+import Storefront from '../components/home/Storefront'
+
 
 const Home = () => {
     const connection = new Connection("https://api.devnet.solana.com")
@@ -76,7 +79,7 @@ const Home = () => {
 
             <main className="flex flex-1 flex-col">
                 <SearchBar />
-
+                <Storefront items={coffeeShopItems}/>
                 <TransactionsList connected={connected} transactions={transactions} />
             </main>
         </div>
