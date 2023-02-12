@@ -18,7 +18,7 @@ const NavMenu = ({ connected, publicKey }) => {
         },
         {
             icon: Cog6ToothIcon,
-            item: 'Settings',
+            item: 'Rewards',
             current: false,
         },
     ]

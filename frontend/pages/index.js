@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Action from '../components/header/Action'
 import NavMenu from '../components/header/NavMenu'
 import Profile from '../components/header/Profile'
@@ -13,7 +13,7 @@ import { Connection, clusterApiUrl, Keypair, LAMPORTS_PER_SOL, PublicKey, System
 
 import { coffeeShopItems } from '../data/coffeeShopData'
 import Storefront from '../components/home/Storefront'
-
+import { CartContext } from '../hooks/cartContext'
 
 const Home = () => {
     const connection = new Connection("https://api.devnet.solana.com")
@@ -22,6 +22,9 @@ const Home = () => {
     const [transactionQRModalOpen, setTransactionQRModalOpen] = useState(false)
     // const [newTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
     const [qrCode, setQrCode] = useState(false)
+    const [cartPrice, setCartPrice] = useState(0);
+    const [cart, setCart] = useState([]);
+
 
     useEffect(() => { //get transactions
         const fetchData = async() => {
@@ -66,23 +69,25 @@ const Home = () => {
     }, [connected])
  
     return (
-        <div className="flex min-h-screen ">
-            <header className="flex w-[300px] flex-col bg-[#f02c4c] p-12">
-                <Profile setModalOpen={setTransactionQRModalOpen} avatar={avatar} userAddress={userAddress} />
-                <TransactionQRModal modalOpen={transactionQRModalOpen} setModalOpen={setTransactionQRModalOpen} userAddress={userAddress} myKey={publicKey} setQrCode={setQrCode} />
+        <CartContext.Provider value={{cartPrice, setCartPrice, cart, setCart}}>
+            <div className="flex min-h-screen ">
+                <header className="flex w-[300px] flex-col bg-[#f02c4c] p-12">
+                    <Profile setModalOpen={setTransactionQRModalOpen} avatar={avatar} userAddress={userAddress} />
+                    <TransactionQRModal modalOpen={transactionQRModalOpen} setModalOpen={setTransactionQRModalOpen} userAddress={userAddress} myKey={publicKey} setQrCode={setQrCode} />
 
-                <NavMenu connected={connected} myKey={publicKey} publicKey={publicKey} />
+                    <NavMenu connected={connected} myKey={publicKey} publicKey={publicKey} />
 
-                <Action setModalOpen={setNewTransactionModalOpen} />
-                <NewTransactionModal modalOpen={newTransactionModalOpen} setModalOpen={setNewTransactionModalOpen} />
-            </header>
+                    <Action setModalOpen={setNewTransactionModalOpen} />
+                    <NewTransactionModal modalOpen={newTransactionModalOpen} setModalOpen={setNewTransactionModalOpen} />
+                </header>
 
-            <main className="flex flex-1 flex-col">
-                <SearchBar />
-                <Storefront items={coffeeShopItems}/>
-                <TransactionsList connected={connected} transactions={transactions} />
-            </main>
-        </div>
+                <main className="flex flex-1 flex-col">
+                    <SearchBar />
+                    <Storefront items={coffeeShopItems}/>
+                    <TransactionsList connected={connected} transactions={transactions} />
+                </main>
+            </div>
+        </CartContext.Provider>
     )
 }
 
