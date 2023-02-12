@@ -5,6 +5,7 @@ import { CartContext } from '../../hooks/cartContext'
 
 export const Storefront = ({ items }) => {
   const {cartPrice, setCartPrice, cart, setCart} = useContext(CartContext)
+
   function getCartPrice(cart) {
     let total = 0
     for (let i = 0; i < cart.length; i++) {
@@ -14,7 +15,7 @@ export const Storefront = ({ items }) => {
   }
   function updateCartAdd(item, price) {
     setCart([...cart, {item, price}])
-    setCartPrice(getCartPrice(cart));
+    setCartPrice(cartPrice + price);
   }
   function updateCartRemove(item, price) {
     setCart(cart.filter(i => i.item !== item && i.price !== price))
@@ -28,7 +29,7 @@ export const Storefront = ({ items }) => {
           rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
         />
-        <div className="container">
+        <div className="container" id="storefront">
           <div className="row">
             {items.map((item, index) => (
               <div className="col">

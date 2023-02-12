@@ -11,17 +11,17 @@ export default async function handler(req, res) {
 	if (req.method === "GET") {
 		res.status(200).send({
 			label: pid.toString(),
-			icon: getAvatarUrl((pid.toString()) + ".png"),
+			icon: "https://toppng.com/uploads/preview/duck-115244013619fahj8jcpu.png",
 		});
 		return
 	}
 	const accountField = req.body.account;
 	// Compose a simple transfer transaction to return. In practice, this can be any transaction, and may be signed.
 	const recipient = new PublicKey(pid)
-	const amount = new BigNumber("0.1")
+	const amount = new BigNumber(req.query.amount || "0.2");
     const reference = new PublicKey(ref);
 	const label = "ok"
-	const message = "Thanks for the SOL!"
+	const message = "Thanks for the coffee!"
 	const splToken = new PublicKey("4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU")
     
     let transaction = await createTransfer(connection, new PublicKey(accountField), {

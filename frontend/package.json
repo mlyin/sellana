@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.0",
+    "@nfteyez/sol-rayz": "^0.10.2",
     "@solana/pay": "^0.2.4",
     "@solana/wallet-adapter-react": "^0.15.18",
     "@solana/wallet-adapter-react-ui": "^0.9.16",
     "@solana/wallet-adapter-wallets": "^0.18.9",
+    "@solana/web3.js": "^1.73.2",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.2",
     "md5": "^2.3.0",

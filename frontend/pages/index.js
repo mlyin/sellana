@@ -20,7 +20,6 @@ const Home = () => {
     const [transactions, setTransactions] = useState([])
     const { connected, publicKey, avatar, userAddress,  newTransactionModalOpen, setNewTransactionModalOpen } = useCashApp()
     const [transactionQRModalOpen, setTransactionQRModalOpen] = useState(false)
-    // const [newTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
     const [qrCode, setQrCode] = useState(false)
     const [cartPrice, setCartPrice] = useState(0);
     const [cart, setCart] = useState([]);
@@ -78,11 +77,11 @@ const Home = () => {
                     <NavMenu connected={connected} myKey={publicKey} publicKey={publicKey} />
 
                     <Action setModalOpen={setNewTransactionModalOpen} />
-                    <NewTransactionModal modalOpen={newTransactionModalOpen} setModalOpen={setNewTransactionModalOpen} />
+                    <NewTransactionModal modalOpen={newTransactionModalOpen} setModalOpen={setNewTransactionModalOpen} userAddress={userAddress} myKey={publicKey} setQrCode={setQrCode} />
                 </header>
 
                 <main className="flex flex-1 flex-col">
-                    <SearchBar />
+                    {/* <SearchBar /> */}
                     <Storefront items={coffeeShopItems}/>
                     <TransactionsList connected={connected} transactions={transactions} />
                 </main>
