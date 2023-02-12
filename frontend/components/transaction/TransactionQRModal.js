@@ -42,7 +42,9 @@ const TransactionQRModal = ({ modalOpen, setModalOpen, userAddress, setQrCode })
 
         
         // const url = encodeURL(urlParams)
-        const url = "solana:https://57d0-2607-f470-6-2001-58ad-4bdc-9852-7d1a.ngrok.io/api/" + userAddress + "/" + reference.toBase58() + "/createtransaction"
+        // console.log(reference)
+        // console.log(reference.toBase58())
+        const url = "solana:https://5532-2607-f470-6-3001-9197-a9be-765-5798.ngrok.io/api/" + userAddress + "/" + reference.toBase58() + "/createtransaction"
         const qr = createQR(url, 488, 'transparent')
         if (qrRef.current) {
             qrRef.current.innerHTML = ''

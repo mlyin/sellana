@@ -5,6 +5,8 @@ import { createTransfer } from '@solana/pay';
 
 export default async function handler(req, res) {
 	// res.status(200).json({ name: 'John Doe' })
+
+    // const { amount, setAmount, receiver, setReceiver, transactionPurpose, setTransactionPurpose, doTransaction } = useCashApp()
 	const connection = new Connection("https://api.devnet.solana.com")
 	if (req.method === "GET") {
 		res.status(200).send({
